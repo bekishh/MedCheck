@@ -247,7 +247,7 @@ public class Main {
                                                         throw new StackOverflowException("Не правильный пол!");
                                                     }
 
-                                                    System.out.println("Введите имя доктора: ");
+                                                    System.out.println("Введите стаж работы доктора: ");
                                                     int experienceYear = scannerNum.nextInt();
 
                                                     Doctor updatedDoctor = new Doctor(doctorId, firstName, lastName, gender, experienceYear);
@@ -315,10 +315,10 @@ public class Main {
                                                     System.out.println("Введите имя пациента: ");
                                                     String firstName = scannerLn.nextLine();
 
-                                                    System.out.println("Введите имя пациента: ");
+                                                    System.out.println("Введите фамилию пациента: ");
                                                     String lastName = scannerLn.nextLine();
 
-                                                    System.out.println("Введите имя пациента: ");
+                                                    System.out.println("Введите возраст пациента: ");
                                                     int age = scannerNum.nextInt();
 
                                                     System.out.println("Введите пол пациента (М/Ж): ");
@@ -387,10 +387,10 @@ public class Main {
                                                     System.out.println("Введите имя пациента: ");
                                                     String firstName = scannerLn.nextLine();
 
-                                                    System.out.println("Введите имя пациента: ");
+                                                    System.out.println("Введите фамилию пациента: ");
                                                     String lastName = scannerLn.nextLine();
 
-                                                    System.out.println("Введите имя пациента: ");
+                                                    System.out.println("Введите возраст пациента: ");
                                                     int age = scannerNum.nextInt();
 
                                                     System.out.println("Введите пол пациента (М/Ж): ");
@@ -409,7 +409,7 @@ public class Main {
                                                     Patient patient = new Patient(GeneratorId.genPatientId(), firstName, lastName, age, gender);
                                                     patients.add(patient);
 
-                                                    System.out.print("Хотите назначить в это отеление еще одного доктора?(Д/Н): ");
+                                                    System.out.print("Хотите добвить в эту больницу еще одного пациента?(Д/Н): ");
                                                 } while (!scannerLn.nextLine().equalsIgnoreCase("Н"));
 
                                                 System.out.println(patientService.addPatientsToHospital(hospitalId, patients));
@@ -425,7 +425,7 @@ public class Main {
                                             case 24 -> {
                                                 if (!Database.hospitals.isEmpty()) {
                                                     System.out.println("Введите возраст: ");
-                                                    System.out.println(patientService.getPatientByAge(scannerNum.nextInt()));
+                                                    System.out.println(patientService.getPatientByAge(scannerNum.nextInt()).values());
                                                 } else {
                                                     throw new StackOverflowException("На данный момент у вас нету ни одной больницы и отделения!");
                                                 }

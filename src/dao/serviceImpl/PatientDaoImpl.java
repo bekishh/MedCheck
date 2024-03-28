@@ -32,16 +32,17 @@ public class PatientDaoImpl implements PatientDao, GenericDao<Patient> {
 
     @Override
     public void removeById(Long id) {
+        boolean isRemoved = false;
         try {
             if (!Database.hospitals.isEmpty()) {
                 for (Hospital hospital : Database.hospitals) {
-                    for (Patient patient : hospital.getPatients()) {
-                        if (Objects.equals(patient.getId(), id)) {
-                            hospital.removePatient(patient);
-                        }
-                    }
+                    isRemoved = hospital.getPatients().removeIf(x -> x.getId().equals(id));
                 }
-                throw new StackOverflowException("Больницы с таким id не существует!");
+                if (isRemoved) {
+                    System.out.println("Пациент успешно удалён!");
+                } else {
+                    throw new StackOverflowException("Больницы с таким id не существует!");
+                }
             } else {
                 throw new StackOverflowException("На данный момент у вас нету ни одной больницы!");
             }
@@ -122,7 +123,7 @@ public class PatientDaoImpl implements PatientDao, GenericDao<Patient> {
                 for (Hospital hospital : Database.hospitals) {
                     for (Patient patient : hospital.getPatients()) {
                         if (patient.getAge() == age) {
-                            patientsByAge.put(age, patient);
+                            patientsByAge.put(patient.getId().intValue(), patient);
                             isPatientsExists = true;
                         }
                     }

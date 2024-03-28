@@ -49,18 +49,10 @@ public class DoctorDaoImpl implements DoctorDao, GenericDao<Doctor> {
         try {
             if (!Database.hospitals.isEmpty()) {
                 for (Hospital hospital : Database.hospitals) {
-                    for (Doctor doctor : hospital.getDoctors()) {
-                        if (Objects.equals(doctor.getId(), id)) {
-                            hospital.removeDoctor(doctor);
-                            isDoctorExists = true;
-                        }
-                    }
+                    isDoctorExists = hospital.getDoctors().removeIf(x -> x.getId().equals(id));
+
                     for (Department department : hospital.getDepartments()) {
-                        for (Doctor doctor : department.getDoctors()) {
-                            if (Objects.equals(doctor.getId(), id)) {
-                                department.removeDoctor(doctor);
-                            }
-                        }
+                        department.getDoctors().removeIf(x -> x.getId().equals(id));
                     }
                 }
                 if (!isDoctorExists) {
@@ -91,7 +83,7 @@ public class DoctorDaoImpl implements DoctorDao, GenericDao<Doctor> {
                             for (int i = 0; i < department.getDoctors().size(); i++) {
                                 if (Objects.equals(department.getDoctors().get(i).getId(), id)) {
                                     department.getDoctors().set(i, doctor);
-                                    return "Doctor successfully updated";
+                                    return "Доктор успешно обновлен!";
                                 }
                             }
                         }

@@ -38,16 +38,17 @@ public class DepartmentDaoImpl implements DepartmentDao, GenericDao<Department> 
 
     @Override
     public void removeById(Long id) {
+        boolean isDeleted = false;
         try {
             if (!Database.hospitals.isEmpty()) {
                 for (Hospital hospital : Database.hospitals) {
-                    for (Department department : hospital.getDepartments()) {
-                        if (Objects.equals(department.getId(), id)) {
-                            hospital.removeDepartment(department);
-                        }
-                    }
+                    isDeleted = hospital.getDepartments().removeIf(x -> x.getId().equals(id));
                 }
-                throw new StackOverflowException("Госпиталя с таким id не существует!");
+                if (isDeleted) {
+                    System.out.println("Отделение успешно удалено!");
+                } else {
+                    throw new StackOverflowException("Отделения с таким id не существует!");
+                }
             } else {
                 throw new StackOverflowException("На данный момент у вас нету ни одного госпиталя!");
             }
